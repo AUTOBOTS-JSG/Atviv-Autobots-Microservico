@@ -69,8 +69,8 @@ public class UsuarioControle {
 		if (usuario.getId() == null) {
 			try {
 				Credencial credencial = new Credencial();
-				credencial.setNomeUsuario(usuario.getCredencial().getNomeUsuario());
-				String senha = codificador.encode(usuario.getCredencial().getSenha());
+				credencial.setNomeUsuario(usuario.getCredencial().toString());
+				String senha = codificador.encode(usuario.getCredenciais().getSenha());
 				credencial.setSenha(senha);
 				usuario.setCredencial(credencial);
 				Empresa empresa = repositorioEmpresa.getById(id);

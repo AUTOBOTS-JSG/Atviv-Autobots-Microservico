@@ -36,7 +36,7 @@ public class VerificadoresNulo {
 		return nulo;
 	}
 
-	public boolean verificarPerfil(Set<PerfilUsuario> perfis) {
+	public boolean verificarPerfil(Set<Perfil> perfis) {
 		boolean nulo = true;
 		if (!(perfis == null)) {
 				nulo = false;

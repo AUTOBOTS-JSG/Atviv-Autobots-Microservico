@@ -6,5 +6,6 @@ import com.autobots.automanager.entitades.Usuario;
 
 
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
-
+	Usuario findByNome(String nomeUsuario);
 }
+ 

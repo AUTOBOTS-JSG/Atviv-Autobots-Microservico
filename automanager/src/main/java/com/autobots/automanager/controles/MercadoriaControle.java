@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,8 +35,11 @@ public class MercadoriaControle {
 	private MercadoriaSelecionador selecionadorMercadoria;
 	@Autowired
 	private AdicionadorLinkMercadoria adicionadorLinkMercadoria;
+	
+	
 
 	@GetMapping("/mercadoria/{id}")
+	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_GERENTE', 'ROLE_VENDEDOR')")
 	public ResponseEntity<Mercadoria> obterMercadoria(@PathVariable long id) {
 		List<Mercadoria> mercadorias = repositorioMercadoria.findAll();
 		Mercadoria mercadoria = selecionadorMercadoria.selecionar(mercadorias, id);
@@ -50,6 +54,7 @@ public class MercadoriaControle {
 	}
 
 	@GetMapping("/mercadorias")
+	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_GERENTE', 'ROLE_VENDEDOR')")
 	public ResponseEntity<List<Mercadoria>> obterMercadorias() {
 		List<Mercadoria> mercadorias = repositorioMercadoria.findAll();
 		if (mercadorias.isEmpty()) {
@@ -62,7 +67,8 @@ public class MercadoriaControle {
 		}
 	}
 
-	@PostMapping("/cadastro/{id}") 
+	@PostMapping("/cadastro/{id}")
+	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_GERENTE')")
 	public ResponseEntity<?> cadastrarMercadoria(@RequestBody Mercadoria mercadoria, @PathVariable long id) {
 		HttpStatus status = HttpStatus.CONFLICT;
 		if (mercadoria.getId() == null) {
@@ -75,7 +81,8 @@ public class MercadoriaControle {
 
 	}
 	
-	@PutMapping("/atualizar") 
+	@PutMapping("/atualizar")
+	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_GERENTE')")
 	public ResponseEntity<?> atualizarMercadoria(@RequestBody Mercadoria atualizacao) {
 		HttpStatus status = HttpStatus.CONFLICT;
 		Mercadoria mercadoria = repositorioMercadoria.getById(atualizacao.getId());
@@ -92,6 +99,7 @@ public class MercadoriaControle {
 	}
 
 	@DeleteMapping("/excluir/{id}")
+	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_GERENTE')")
 	public ResponseEntity<?> excluirMercadoria(@RequestBody Mercadoria exclusao, @PathVariable long id) {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		Mercadoria mercadoria = repositorioMercadoria.getById(exclusao.getId());
