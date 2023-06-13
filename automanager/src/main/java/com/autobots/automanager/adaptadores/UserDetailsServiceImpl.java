@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.autobots.automanager.entidades.Usuario;
+import com.autobots.automanager.entitades.Usuario;
 import com.autobots.automanager.repositorios.RepositorioUsuario;
 
 @Service
@@ -21,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		List<Usuario> usuarios = repositorio.findAll();
 		Usuario selecionado = null;
 		for (Usuario usuario : usuarios) {
-			if (usuario.getCredencial().getNomeUsuario().equals(nomeUsuario)) {
+			if (usuario.getCredenciais().getNomeUsuario().equals(nomeUsuario)) {
 				selecionado = usuario;
 				break;
 			}

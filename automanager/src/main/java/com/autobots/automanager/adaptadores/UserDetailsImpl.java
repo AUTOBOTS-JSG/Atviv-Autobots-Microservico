@@ -8,7 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.autobots.automanager.entidades.Usuario;
+import com.autobots.automanager.entitades.Usuario;
 import com.autobots.automanager.modelos.Perfil;
 
 @SuppressWarnings("serial")

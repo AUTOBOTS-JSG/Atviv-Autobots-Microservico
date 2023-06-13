@@ -1,4 +1,4 @@
-package com.autobots.automanager.entidades;
+package com.autobots.automanager.entitades;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,13 +7,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode
 @Data
 @Entity
-public class Cliente {
+public class Servico {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column
+	@Column(nullable = false)
 	private String nome;
+	@Column(nullable = false)
+	private double valor;
+	@Column
+	private String descricao;
 }
