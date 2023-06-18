@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.autobots.automanager.adicionadores.AdicionadorLinkCredencial;
 import com.autobots.automanager.atualizadores.CredencialAtualizador;
 import com.autobots.automanager.entitades.Credencial;
 import com.autobots.automanager.entitades.Usuario;
@@ -32,9 +31,6 @@ public class CredencialControle {
 	private UsuarioRepositorio repositorioUsuario;
 	@Autowired
 	private CredencialSelecionador selecionadorCredencial;
-	@Autowired
-	private AdicionadorLinkCredencial adicionadorLinkCredencial;
-
 	@GetMapping("/credencial/{id}")
 	public ResponseEntity<Credencial> obterCredencial(@PathVariable long id) {
 		List<Credencial> credenciais = repositorioCredencial.findAll();
@@ -43,7 +39,6 @@ public class CredencialControle {
 			ResponseEntity<Credencial> resposta = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			return resposta;
 		} else {
-			adicionadorLinkCredencial.adicionarLink(credencial);
 			ResponseEntity<Credencial> resposta = new ResponseEntity<Credencial>(credencial, HttpStatus.FOUND);
 			return resposta;
 		} 
@@ -56,7 +51,6 @@ public class CredencialControle {
 			ResponseEntity<List<Credencial>> resposta = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			return resposta;
 		} else {
-			adicionadorLinkCredencial.adicionarLink(credenciais);
 			ResponseEntity<List<Credencial>> resposta = new ResponseEntity<>(credenciais, HttpStatus.FOUND);
 			return resposta;
 		}

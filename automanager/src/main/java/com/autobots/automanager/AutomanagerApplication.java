@@ -21,9 +21,9 @@ import com.autobots.automanager.entitades.Usuario;
 import com.autobots.automanager.entitades.Veiculo;
 import com.autobots.automanager.entitades.Venda;
 import com.autobots.automanager.modelos.Perfil;
-import com.autobots.automanager.modelos.PerfilUsuario;
 import com.autobots.automanager.modelos.TipoDocumento;
 import com.autobots.automanager.modelos.TipoVeiculo;
+import com.autobots.automanager.repositorios.RepositorioEmpresa;
 import com.autobots.automanager.repositorios.RepositorioUsuario;
 
 @SpringBootApplication
@@ -31,6 +31,8 @@ public class AutomanagerApplication implements CommandLineRunner {
 
 	@Autowired
 	private RepositorioUsuario repositorio;
+	@Autowired
+	private RepositorioEmpresa repositorioEmpresa;
 
 	public static void main(String[] args) {
 		SpringApplication.run(AutomanagerApplication.class, args);
@@ -38,15 +40,17 @@ public class AutomanagerApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		
+		
 		BCryptPasswordEncoder codificador = new BCryptPasswordEncoder();
 		Usuario usuario = new Usuario();
 		usuario.setNome("administrador");
 		usuario.getPerfis().add(Perfil.ROLE_ADMIN);
-		Credencial credencial = new Credencial();
+		CredencialUsuarioSenha credencial = new CredencialUsuarioSenha();
 		credencial.setNomeUsuario("admin");
 		String senha  = "123456";
 		credencial.setSenha(codificador.encode(senha));
-		usuario.setCredencial(credencial);
+		usuario.setCredenciais(credencial);
 		repositorio.save(usuario);
 		
 
@@ -74,7 +78,7 @@ public class AutomanagerApplication implements CommandLineRunner {
 		Usuario funcionario = new Usuario();
 		funcionario.setNome("Pedro Alcântara de Bragança e Bourbon");
 		funcionario.setNomeSocial("Dom Pedro");
-		funcionario.getPerfis().add(PerfilUsuario.FUNCIONARIO);
+		funcionario.getPerfis().add(Perfil.ROLE_VENDEDOR);
 
 		Email emailFuncionario = new Email();
 		emailFuncionario.setEndereco("a@a.com");
@@ -118,7 +122,7 @@ public class AutomanagerApplication implements CommandLineRunner {
 		Usuario fornecedor = new Usuario();
 		fornecedor.setNome("Componentes varejo de partes automotivas ltda");
 		fornecedor.setNomeSocial("Loja do carro, vendas de componentes automotivos");
-		fornecedor.getPerfis().add(PerfilUsuario.FORNECEDOR);
+		fornecedor.getPerfis().add(Perfil.ROLE_VENDEDOR);
 
 		Email emailFornecedor = new Email();
 		emailFornecedor.setEndereco("f@f.com");
@@ -169,7 +173,7 @@ public class AutomanagerApplication implements CommandLineRunner {
 		Usuario cliente = new Usuario();
 		cliente.setNome("Pedro Alcântara de Bragança e Bourbon");
 		cliente.setNomeSocial("Dom pedro cliente");
-		cliente.getPerfis().add(PerfilUsuario.CLIENTE);
+		cliente.getPerfis().add(Perfil.ROLE_CLIENTE);
 
 		Email emailCliente = new Email();
 		emailCliente.setEndereco("c@c.com");

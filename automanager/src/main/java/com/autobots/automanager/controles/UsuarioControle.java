@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.autobots.automanager.adicionadores.AdicionadorLinkUsuario;
 import com.autobots.automanager.atualizadores.UsuarioAtualizador;
-import com.autobots.automanager.entitades.Credencial;
 import com.autobots.automanager.entitades.Empresa;
 import com.autobots.automanager.entitades.Usuario;
 import com.autobots.automanager.repositorios.RepositorioEmpresa;
@@ -63,16 +62,12 @@ public class UsuarioControle {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	@PostMapping("/cadastro/{id}")
 	public ResponseEntity<?> cadastrarUsuario(@RequestBody Usuario usuario, @PathVariable long id) {
 		HttpStatus status = HttpStatus.CONFLICT;
 		if (usuario.getId() == null) {
 			try {
-				Credencial credencial = new Credencial();
-				credencial.setNomeUsuario(usuario.getCredencial().toString());
-				String senha = codificador.encode(usuario.getCredenciais().getSenha());
-				credencial.setSenha(senha);
-				usuario.setCredencial(credencial);
 				Empresa empresa = repositorioEmpresa.getById(id);
 				Set<Usuario> usuariosEmpresa = empresa.getUsuarios();
 				usuariosEmpresa.add(usuario);
@@ -87,6 +82,7 @@ public class UsuarioControle {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@PutMapping("/atualizar")
 	public ResponseEntity<?> atualizarUsuario(@RequestBody Usuario atualizacao) {
 		HttpStatus status = HttpStatus.CONFLICT;
@@ -102,6 +98,7 @@ public class UsuarioControle {
 		return new ResponseEntity<>(status);
 	}
 
+	@SuppressWarnings("deprecation")
 	@DeleteMapping("/excluir/{id}")
 	public ResponseEntity<?> excluirUsuario(@RequestBody Usuario exclusao, @PathVariable long id) {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
